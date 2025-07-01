@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/permissions/permissions.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/permissions/permissions.dart';
 
 bool isPremiumActive() {
   final iapBox = Hive.box<bool>('iap');

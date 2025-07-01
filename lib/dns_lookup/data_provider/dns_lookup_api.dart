@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/dns_lookup/models/dns_lookup_response.dart';
+import 'package:network_scanner/dns_lookup/models/dns_lookup_response.dart';
 
 class DnsLookupApi {
   DnsLookupApi({http.Client? client}) : _httpClient = client ?? http.Client();

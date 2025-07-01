@@ -1,8 +1,6 @@
-name: network_arch
+name: network_scanner
 description:
-  NetworkArch is a network diagnostic tool equipped with various utilities,
-  including pinging specific IP address or hostname, sending Wake on LAN magic packets,
-  whois and DNS Lookup.
+  Network scanner is app for scanning your network and prepare to pentest.
 publish_to: "none"
 version: 2.2.0
 
@@ -45,10 +43,12 @@ dependencies:
   network_info_plus: ^4.1.0
   package_info_plus: ^5.0.1
   path_provider: ^2.1.2
-  permission_handler: ^11.3.0
+  permission_handler: ^11.3.1
   sentry_flutter: ^7.16.1
   url_launcher: ^6.2.5
   wake_on_lan: ^4.1.1
+  wifi_info_flutter: ^2.0.2
+  wifi_scan: ^0.4.1+2
   wiredash: ^2.0.0
 
 dev_dependencies:

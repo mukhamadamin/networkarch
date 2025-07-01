@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 // Project imports:
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 abstract class Themes {
   // ignore: avoid-global-state
   static List<FlexSchemeData> schemesListWithDynamic = [
     // Fallback scheme that will get replaced if device supports dynamic colors
     FlexSchemeData(
-      name: 'Fallback',
+      name: 'Ещё',
       description:
-          'Fallback scheme if your device does not support dynamic colors (Android 12+)',
+          'Резервная схема, если ваше устройство не поддерживает динамические цвета (Android 12+)',
       light: FlexSchemeColor.from(
         primary: Colors.blue,
         brightness: Brightness.light,

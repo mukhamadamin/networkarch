@@ -10,19 +10,19 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wiredash/wiredash.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/dns_lookup/dns_lookup.dart';
-import 'package:network_arch/home.dart';
-import 'package:network_arch/ip_geo/ip_geo.dart';
-import 'package:network_arch/lan_scanner/lan_scanner.dart';
-import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/package_info/package_info.dart';
-import 'package:network_arch/permissions/permissions.dart';
-import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/theme/theme.dart';
-import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
-import 'package:network_arch/whois/whois.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/dns_lookup/dns_lookup.dart';
+import 'package:network_scanner/home.dart';
+import 'package:network_scanner/ip_geo/ip_geo.dart';
+import 'package:network_scanner/lan_scanner/lan_scanner.dart';
+import 'package:network_scanner/network_status/network_status.dart';
+import 'package:network_scanner/package_info/package_info.dart';
+import 'package:network_scanner/permissions/permissions.dart';
+import 'package:network_scanner/ping/ping.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
+import 'package:network_scanner/theme/theme.dart';
+import 'package:network_scanner/wake_on_lan/wake_on_lan.dart';
+import 'package:network_scanner/whois/whois.dart';
 
 class NetworkArch extends StatelessWidget {
   NetworkArch({super.key});

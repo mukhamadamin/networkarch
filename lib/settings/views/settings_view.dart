@@ -15,11 +15,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wiredash/wiredash.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/package_info/package_info.dart';
-import 'package:network_arch/settings/widgets/android_theme_switcher.dart';
-import 'package:network_arch/settings/widgets/ios_theme_switcher.dart';
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/package_info/package_info.dart';
+import 'package:network_scanner/settings/widgets/android_theme_switcher.dart';
+import 'package:network_scanner/settings/widgets/ios_theme_switcher.dart';
+import 'package:network_scanner/shared/shared.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
@@ -59,7 +59,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('Settings'),
+      largeTitle: const Text('Настройки'),
       child: _buildBody(context),
     );
   }
@@ -72,29 +72,29 @@ class _SettingsViewState extends State<SettingsView> {
             return Column(
               children: [
                 const AndroidThemeSwitcher(),
-                const SmallDescription(text: 'Help'),
+                const SmallDescription(text: 'Помощь'),
                 ActionCard(
-                  title: 'Restore purchases',
-                  desc: 'Restore purchases made in the past',
+                  title: 'Восстановить изменения',
+                  desc: 'Восстановить изменения, сделанные в прошлом',
                   icon: const FaIcon(Icons.workspace_premium_rounded),
                   onTap: _restorePurchases,
                 ),
                 const SizedBox(height: Constants.listSpacing),
                 ActionCard(
-                  title: 'Onboarding screen',
-                  desc: 'Resolve permissions issues',
+                  title: 'Экран ввода в эксплуатацию',
+                  desc: 'Устраните проблемы с разрешениями',
                   icon: const FaIcon(Icons.info_outline_rounded),
                   onTap: () => Hive.box<bool>('settings')
                       .put('hasIntroductionBeenShown', false),
                 ),
                 const SizedBox(height: Constants.listSpacing),
-                ActionCard(
-                  title: 'Source code',
-                  desc: 'Feel free to contribute!',
-                  icon: const FaIcon(FontAwesomeIcons.github),
-                  onTap: _canLaunchUrl ? _openSourceCode : null,
-                ),
-                const SizedBox(height: Constants.listSpacing),
+                // ActionCard(
+                //   title: 'Source code',
+                //   desc: 'Feel free to contribute!',
+                //   icon: const FaIcon(FontAwesomeIcons.github),
+                //   onTap: _canLaunchUrl ? _openSourceCode : null,
+                // ),
+                // const SizedBox(height: Constants.listSpacing),
               ],
             );
           },
@@ -102,7 +102,7 @@ class _SettingsViewState extends State<SettingsView> {
             return Column(
               children: [
                 CupertinoListSection.insetGrouped(
-                  header: const Text('Theme'),
+                  header: const Text('Тема'),
                   children: const [
                     CupertinoListTile.notched(
                       leading: Icon(CupertinoIcons.sun_max),
@@ -111,11 +111,11 @@ class _SettingsViewState extends State<SettingsView> {
                   ],
                 ),
                 CupertinoListSection.insetGrouped(
-                  header: const Text('Help'),
+                  header: const Text('Помощь'),
                   children: [
                     ActionCard(
-                      title: 'Restore purchases',
-                      desc: 'Restore purchases made in the past',
+                      title: 'Восстановить изменения',
+                      desc: 'Восстановить изменения, сделанные в прошлом',
                       icon: const FaIcon(CupertinoIcons.shopping_cart),
                       cupertinoTrailing: _arePurchasesRestoring
                           ? const CupertinoActivityIndicator()
@@ -123,8 +123,8 @@ class _SettingsViewState extends State<SettingsView> {
                       onTap: _arePurchasesRestoring ? null : _restorePurchases,
                     ),
                     ActionCard(
-                      title: 'Onboarding screen',
-                      desc: 'Resolve permissions issues',
+                      title: 'Экран ввода в эксплуатацию',
+                      desc: 'Устраните проблемы с разрешениями',
                       icon: const FaIcon(CupertinoIcons.info),
                       onTap: () => Hive.box<bool>('settings')
                           .put('hasIntroductionBeenShown', false),
@@ -141,37 +141,37 @@ class _SettingsViewState extends State<SettingsView> {
             );
           },
         ),
-        PlatformWidget(
-          androidBuilder: (context) => Column(
-            children: [
-              ActionCard(
-                title: 'Send feedback',
-                desc: 'Spotted a bug or something is not working?',
-                icon: const FaIcon(
-                  FontAwesomeIcons.bug,
-                  color: Colors.red,
-                ),
-                onTap: () => _sendFeedback(context),
-              ),
-              const SizedBox(height: Constants.listSpacing),
-            ],
-          ),
-          iosBuilder: (context) => CupertinoListSection.insetGrouped(
-            children: [
-              ActionCard(
-                title: 'Send feedback',
-                desc: 'Spotted a bug or something is not working?',
-                icon: const FaIcon(
-                  CupertinoIcons.ant,
-                  color: CupertinoColors.systemRed,
-                ),
-                onTap: () => _sendFeedback(context),
-              ),
-            ],
-          ),
-        ),
-        // Compensate for the padding on iOS.
-        const PackageInfoView(),
+        // PlatformWidget(
+        //   androidBuilder: (context) => Column(
+        //     children: [
+        //       ActionCard(
+        //         title: 'Send feedback',
+        //         desc: 'Spotted a bug or something is not working?',
+        //         icon: const FaIcon(
+        //           FontAwesomeIcons.bug,
+        //           color: Colors.red,
+        //         ),
+        //         onTap: () => _sendFeedback(context),
+        //       ),
+        //       const SizedBox(height: Constants.listSpacing),
+        //     ],
+        //   ),
+        //   iosBuilder: (context) => CupertinoListSection.insetGrouped(
+        //     children: [
+        //       ActionCard(
+        //         title: 'Send feedback',
+        //         desc: 'Spotted a bug or something is not working?',
+        //         icon: const FaIcon(
+        //           CupertinoIcons.ant,
+        //           color: CupertinoColors.systemRed,
+        //         ),
+        //         onTap: () => _sendFeedback(context),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        // // Compensate for the padding on iOS.
+        // const PackageInfoView(),
       ],
     );
   }
@@ -215,8 +215,8 @@ class _SettingsViewState extends State<SettingsView> {
       context: context,
       builder: (context) {
         return PlatformAlertDialog(
-          title: const Text('Restore purchases'),
-          content: const Text('Purchases have been restored.'),
+          title: const Text('Восстановить изменения'),
+          content: const Text('Изменения были восстановлены.'),
           actions: [
             PlatformDialogAction(
               child: const Text('OK'),

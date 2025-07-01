@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_scanner/shared/shared.dart';
 
 class HexBytesViewer extends StatelessWidget {
   const HexBytesViewer({

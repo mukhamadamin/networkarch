@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class ContentListView extends StatelessWidget {
   const ContentListView({

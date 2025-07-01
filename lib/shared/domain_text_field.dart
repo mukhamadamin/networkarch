@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_scanner/shared/shared.dart';
 
 class DomainTextField extends StatelessWidget {
   const DomainTextField({
     required this.controller,
-    this.label = 'IP address (e.g. 1.1.1.1) or domain',
+    this.label = 'IP-адрес (например, 1.1.1.1) или домен',
     this.enabled,
     this.expands = false,
     this.errorText,

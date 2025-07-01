@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:network_arch/whois/data_provider/whois_api.dart';
+import 'package:network_scanner/whois/data_provider/whois_api.dart';
 
 class WhoisRepository {
   WhoisRepository({WhoisApi? api}) : _whoisApi = api ?? WhoisApi();

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/dns_lookup/dns_lookup.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/dns_lookup/dns_lookup.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class DnsRecordCard extends StatelessWidget {
   const DnsRecordCard(

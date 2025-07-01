@@ -6,8 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // Project imports:
-import 'package:network_arch/dns_lookup/models/dns_lookup_response.dart';
-import 'package:network_arch/dns_lookup/repository/dns_lookup_repository.dart';
+import 'package:network_scanner/dns_lookup/models/dns_lookup_response.dart';
+import 'package:network_scanner/dns_lookup/repository/dns_lookup_repository.dart';
 
 part 'dns_lookup_event.dart';
 part 'dns_lookup_state.dart';

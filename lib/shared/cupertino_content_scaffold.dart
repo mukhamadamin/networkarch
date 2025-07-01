@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 // Project imports:
-import 'package:network_arch/theme/themes.dart';
+import 'package:network_scanner/theme/themes.dart';
 
 class CupertinoContentScaffold extends StatelessWidget {
   const CupertinoContentScaffold({

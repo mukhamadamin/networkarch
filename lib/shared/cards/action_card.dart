@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/network_status/widgets/adaptive_button.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/network_status/widgets/adaptive_button.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class ActionCard extends StatelessWidget {
   const ActionCard({

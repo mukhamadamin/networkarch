@@ -8,10 +8,10 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
+import 'package:network_scanner/models/animated_list_model.dart';
+import 'package:network_scanner/ping/ping.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/utils.dart';
 
 class PingView extends StatefulWidget {
   const PingView({super.key});
@@ -84,7 +84,7 @@ class _PingViewState extends State<PingView> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: ActionAppBar(
-        title: 'Ping',
+        title: 'Пинг',
         isActive: true,
         onStartPressed: _handleStart,
         onStopPressed: _handleStop,
@@ -108,7 +108,7 @@ class _PingViewState extends State<PingView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('Ping'),
+      largeTitle: const Text('Пинг'),
       scrollController: _scrollController,
       navBarTrailingWidget: BlocBuilder<PingBloc, PingState>(
         builder: (context, state) {
@@ -117,7 +117,7 @@ class _PingViewState extends State<PingView> {
                   padding: EdgeInsets.zero,
                   onPressed: _handleStop,
                   child: Text(
-                    'Stop',
+                    'Стоп',
                     style: TextStyle(
                       color: CupertinoColors.systemRed.resolveFrom(context),
                     ),
@@ -127,7 +127,7 @@ class _PingViewState extends State<PingView> {
                   padding: EdgeInsets.zero,
                   onPressed: _shouldStartButtonBeActive ? _handleStart : null,
                   child: Text(
-                    'Start',
+                    'Старт',
                     style: TextStyle(
                       color: _shouldStartButtonBeActive
                           ? CupertinoColors.systemGreen.resolveFrom(context)
@@ -157,7 +157,7 @@ class _PingViewState extends State<PingView> {
                   return Expanded(
                     child: DomainTextField(
                       controller: _targetHostController,
-                      label: 'IP address (e.g. 1.1.1.1)',
+                      label: 'IP-адрес (например, 1.1.1.1)',
                       enabled: state is PingInitial || state is PingRunComplete,
                       onChanged: (_) {
                         setState(() {

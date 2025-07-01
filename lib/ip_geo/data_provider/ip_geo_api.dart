@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/ip_geo/models/ip_geo_response.dart';
+import 'package:network_scanner/ip_geo/models/ip_geo_response.dart';
 
 class IpGeoApi {
   IpGeoApi({http.Client? client}) : _httpClient = client ?? http.Client();

@@ -16,8 +16,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/network_arch.dart';
-import 'package:network_arch/simple_bloc_observer.dart';
+import 'package:network_scanner/network_arch.dart';
+import 'package:network_scanner/simple_bloc_observer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

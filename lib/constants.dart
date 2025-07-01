@@ -8,16 +8,16 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/dns_lookup/dns_lookup.dart';
-import 'package:network_arch/introduction/introduction.dart';
-import 'package:network_arch/ip_geo/ip_geo.dart';
-import 'package:network_arch/lan_scanner/lan_scanner.dart';
-import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/overview/overview.dart';
-import 'package:network_arch/ping/ping.dart';
-import 'package:network_arch/settings/settings.dart';
-import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
-import 'package:network_arch/whois/whois.dart';
+import 'package:network_scanner/dns_lookup/dns_lookup.dart';
+import 'package:network_scanner/introduction/introduction.dart';
+import 'package:network_scanner/ip_geo/ip_geo.dart';
+import 'package:network_scanner/lan_scanner/lan_scanner.dart';
+import 'package:network_scanner/network_status/network_status.dart';
+import 'package:network_scanner/overview/overview.dart';
+import 'package:network_scanner/ping/ping.dart';
+import 'package:network_scanner/settings/settings.dart';
+import 'package:network_scanner/wake_on_lan/wake_on_lan.dart';
+import 'package:network_scanner/whois/whois.dart';
 
 abstract class Constants {
   static const String appName = 'NetworkArch';
@@ -36,17 +36,18 @@ abstract class Constants {
 
   static const String wifiFeatureTitle = 'Wi-Fi';
   static const String wifiFeatureDesc =
-      'Explore detailed information about your Wi-Fi network.';
+      'Изучите подробную информацию о вашей сети Wi-Fi.';
 
-  static const String carrierFeatureTitle = 'Carrier';
+  // static const String carrierFeatureTitle = 'проводник';
   static const String carrierFeatureDesc =
-      'Explore detailed information about your cellular network.';
+      'Изучите подробную информацию о вашей сотовой сети.';
 
-  static const String utilitiesFeatureTitle = 'Utilities';
+  static const String utilitiesFeatureTitle = 'Услуги';
   static const String utilitiesFeatureDesc =
-      'Test your network thanks to various diagnostic tools such as ping, Wake on LAN, LAN Scanner and more.';
+      'Протестируйте свою сеть с помощью различных диагностических инструментов, таких как ping, Wake on LAN, LAN Scanner и других.';
 
-  static const String usageDesc = 'We never share this data with anyone.';
+  static const String usageDesc =
+      'Мы никогда ни с кем не делимся этими данными.';
 
   static const String overviewAndroidAdUnitId =
       'ca-app-pub-3222092607864795/3727150533';
@@ -86,10 +87,10 @@ abstract class Constants {
           ),
         ),
     '/wifi': (context) => const WifiDetailedView(),
-    '/carrier': (context) => const CarrierDetailView(),
+    // '/carrier': (context) => const CarrierDetailView(),
     '/tools/ping': (context) => const PingView(),
-    '/tools/lan': (context) => const LanScannerView(),
-    '/tools/wol': (context) => const WakeOnLanView(),
+    '/tools/lan': (context) => NetworkPentestScreen(),
+    '/tools/wol': (context) => PentestScreen(),
     '/tools/ip_geo': (context) => const IpGeoView(),
     '/tools/whois': (context) => const WhoisView(),
     '/tools/dns_lookup': (context) => const DnsLookupView(),
@@ -125,47 +126,48 @@ abstract class Constants {
 
   // Tools descriptions
   static const String pingDesc =
-      'Send ICMP pings to specific IP address or domain.';
+      'Отправляйте ICMP-сообщения на определенный IP-адрес или домен.';
 
   static const String lanScannerDesc =
-      'Discover network devices in the local network.';
+      'Найдите сетевые устройства в локальной сети.';
 
-  static const String wolDesc = 'Send magic packets in your local network.';
+  static const String wolDesc =
+      'Отправляйте волшебные пакеты в вашей локальной сети.';
 
-  static const String ipGeoDesc = 'Get the geolocation of any IP address.';
+  static const String ipGeoDesc = 'Получите геолокацию любого IP-адреса.';
 
-  static const String whoisDesc = 'Lookup information about any domain.';
+  static const String whoisDesc = 'Поиск информации о любом домене.';
 
-  static const String dnsDesc = 'Lookup DNS records of any domain.';
+  static const String dnsDesc = 'Просматривайте DNS-записи любого домена.';
 
   // Error descriptions
-  static const String defaultError = 'Error while loading data';
+  static const String defaultError = 'Ошибка при загрузке данных';
 
-  static const String simError = 'No SIM card';
+  static const String simError = 'Нет SIM-карты';
 
-  static const String noReplyError = 'No reply received from the host';
+  static const String noReplyError = 'Ответа от ведущего не получено';
 
-  static const String unknownError = 'Unknown error';
+  static const String unknownError = 'Неизвестная ошибка';
 
-  static const String unknownHostError = 'Unknown host';
+  static const String unknownHostError = 'Неизвестный хост';
 
-  static const String requestTimedOutError = 'Request timed out';
+  static const String requestTimedOutError = 'Время ожидания запроса истекло';
 
   // Permissions descriptions
   static const String locationPermissionDesc =
-      'We need your location permission in order to access Wi-Fi information.';
+      'Нам необходимо разрешение на определение вашего местоположения, чтобы получить доступ к информации о Wi-Fi.';
 
   static const String phoneStatePermissionDesc =
-      'We need your phone permission in order to access carrier information.';
+      'Нам необходимо разрешение вашего телефона, чтобы получить доступ к информации о операторе связи.';
 
   // Permissions messages
-  static const String _permissionGranted = 'Permission succesfully granted.';
+  static const String _permissionGranted = 'Разрешение успешно получено.';
 
   static const String _permissionDenied =
-      '''Permission denied, the app may not function properly, check the app's settings.''';
+      '''В разрешении отказано, приложение может работать неправильно, проверьте настройки приложения.''';
 
   static const String _permissionDefault =
-      'Something gone wrong, check app permissions.';
+      'Что-то пошло не так, проверьте права доступа к приложению.';
 
   static const SnackBar permissionGrantedSnackbar = SnackBar(
     content: Row(
@@ -186,7 +188,7 @@ abstract class Constants {
       ],
     ),
     action: SnackBarAction(
-      label: 'Open settings',
+      label: 'Откройте настройки',
       onPressed: openAppSettings,
     ),
   );
@@ -200,7 +202,7 @@ abstract class Constants {
       ],
     ),
     action: SnackBarAction(
-      label: 'Open settings',
+      label: 'Откройте настройки',
       onPressed: openAppSettings,
     ),
   );
@@ -209,7 +211,7 @@ abstract class Constants {
     BuildContext context,
   ) =>
       CupertinoAlertDialog(
-        title: const Text('Permission granted'),
+        title: const Text('Разрешение получено'),
         content: const Text(_permissionGranted),
         actions: [
           CupertinoDialogAction(
@@ -225,12 +227,12 @@ abstract class Constants {
     BuildContext context,
   ) =>
       CupertinoAlertDialog(
-        title: const Text('Permission denied'),
+        title: const Text('В разрешении отказано'),
         content: const Text(_permissionDenied),
         actions: [
           const CupertinoDialogAction(
             onPressed: openAppSettings,
-            child: Text('Open settings'),
+            child: Text('Откройте настройки'),
           ),
           CupertinoDialogAction(
             child: const Text('OK'),
@@ -245,12 +247,12 @@ abstract class Constants {
     BuildContext context,
   ) =>
       CupertinoAlertDialog(
-        title: const Text('Something gone wrong'),
+        title: const Text('Что-то пошло не так'),
         content: const Text(_permissionDefault),
         actions: [
           const CupertinoDialogAction(
             onPressed: openAppSettings,
-            child: Text('Open settings'),
+            child: Text('Откройте настройки'),
           ),
           CupertinoDialogAction(
             child: const Text('OK'),
@@ -263,11 +265,11 @@ abstract class Constants {
 
   // WOL iOS dialogs
   static const String _wolIpValidationError =
-      'Provided IPv4 address is invalid, check your data and try again.';
+      'Если IPv4-адрес неверен, проверьте свои данные и повторите попытку.';
 
   static CupertinoAlertDialog wolIpValidationError(BuildContext context) =>
       CupertinoAlertDialog(
-        title: const Text('Error'),
+        title: const Text('Ошибка'),
         content: const Text(_wolIpValidationError),
         actions: [
           CupertinoDialogAction(
@@ -280,11 +282,11 @@ abstract class Constants {
       );
 
   static const String _wolMacValidationError =
-      'Provided MAC address is invalid, check your data and try again.';
+      'Если MAC-адрес указан неверно, проверьте свои данные и повторите попытку.';
 
   static CupertinoAlertDialog wolMacValidationError(BuildContext context) =>
       CupertinoAlertDialog(
-        title: const Text('Error'),
+        title: const Text('Ошибка'),
         content: const Text(_wolMacValidationError),
         actions: [
           CupertinoDialogAction(
@@ -297,13 +299,13 @@ abstract class Constants {
       );
 
   static const String _wolIpAndMacValidationError =
-      'Provided IPv4 and MAC address are invalid, check your data and try again.';
+      'Если IPv4 и MAC-адрес неверны, проверьте свои данные и повторите попытку.';
 
   static CupertinoAlertDialog wolIpAndMacValidationError(
     BuildContext context,
   ) =>
       CupertinoAlertDialog(
-        title: const Text('Error'),
+        title: const Text('Ошибка'),
         content: const Text(_wolIpAndMacValidationError),
         actions: [
           CupertinoDialogAction(

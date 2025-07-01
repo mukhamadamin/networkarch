@@ -7,9 +7,9 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/introduction/introduction.dart';
-import 'package:network_arch/permissions/permissions.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/introduction/introduction.dart';
+import 'package:network_scanner/permissions/permissions.dart';
 
 final List<PageViewModel> pagesList = [
   PageViewModel(
@@ -49,12 +49,12 @@ final List<PageViewModel> pagesList = [
           description: Constants.wifiFeatureDesc,
         ),
         SizedBox(height: Constants.listSpacing),
-        OnboardingFeature(
-          icon: Icons.cell_tower_rounded,
-          title: Constants.carrierFeatureTitle,
-          description: Constants.carrierFeatureDesc,
-        ),
-        SizedBox(height: Constants.listSpacing),
+        // OnboardingFeature(
+        //   icon: Icons.cell_tower_rounded,
+        //   title: Constants.carrierFeatureTitle,
+        //   description: Constants.carrierFeatureDesc,
+        // ),
+        // SizedBox(height: Constants.listSpacing),
         OnboardingFeature(
           icon: Icons.settings_rounded,
           title: Constants.utilitiesFeatureTitle,
@@ -68,7 +68,7 @@ final List<PageViewModel> pagesList = [
       child: Builder(
         builder: (context) {
           return Text(
-            'Permissions',
+            'Разрешения',
             style: Theme.of(context).textTheme.titleLarge,
           );
         },
@@ -88,7 +88,7 @@ final List<PageViewModel> pagesList = [
       alignment: Alignment.bottomCenter,
       child: TextButton(
         onPressed: openAppSettings,
-        child: Text('Open app settings'),
+        child: Text('Откройте настройки приложения'),
       ),
     ),
   ),

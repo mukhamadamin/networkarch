@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lan_scanner/lan_scanner.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class HostCard extends StatelessWidget {
   const HostCard({
@@ -24,7 +24,7 @@ class HostCard extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         leading: const StatusCard(
           color: Colors.green,
-          text: 'Online',
+          text: 'Онлайн',
         ),
         // TODO(ivirtex): Add resolving hostname
         // title: FutureBuilder(
@@ -56,7 +56,7 @@ class HostCard extends StatelessWidget {
               arguments: item.internetAddress.address,
             );
           },
-          child: const Text('Ping'),
+          child: const Text('Пинг'),
         ),
       ),
     );

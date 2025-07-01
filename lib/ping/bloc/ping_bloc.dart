@@ -10,7 +10,7 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:network_arch/ping/repository/ping_repository.dart';
+import 'package:network_scanner/ping/repository/ping_repository.dart';
 
 part 'ping_event.dart';
 part 'ping_state.dart';

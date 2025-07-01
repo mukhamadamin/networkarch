@@ -7,11 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/network_status/widgets/adaptive_button.dart';
-import 'package:network_arch/shared/list_circular_progress_indicator.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
-import 'package:network_arch/theme/themes.dart';
+import 'package:network_scanner/network_status/network_status.dart';
+import 'package:network_scanner/network_status/widgets/adaptive_button.dart';
+import 'package:network_scanner/shared/list_circular_progress_indicator.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
+import 'package:network_scanner/theme/themes.dart';
 
 class WifiStatusCard extends StatelessWidget {
   const WifiStatusCard({super.key});
@@ -52,7 +52,7 @@ class WifiStatusCard extends StatelessWidget {
                       const SizedBox(height: 20),
                       Row(
                         children: [
-                          const Text('Local IP'),
+                          const Text('Локальный IP'),
                           const Spacer(),
                           if (state.wifiStatus == NetworkStatus.success)
                             Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
@@ -78,7 +78,7 @@ class WifiStatusCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const SizedBox(),
-                        const Text('Detailed view'),
+                        const Text('Детальный просмотр'),
                         FaIcon(
                           FontAwesomeIcons.circleArrowRight,
                           color: Themes.getPlatformIconColor(context),
@@ -124,7 +124,7 @@ class WifiStatusCard extends StatelessWidget {
                       const SizedBox(height: 20),
                       Row(
                         children: [
-                          const Text('Local IP'),
+                          const Text('Локальный IP'),
                           const Spacer(),
                           if (state.wifiStatus == NetworkStatus.success)
                             Text(state.wifiInfo!.wifiIPv4 ?? 'N/A')
@@ -139,7 +139,7 @@ class WifiStatusCard extends StatelessWidget {
                   ),
                 ),
                 CupertinoListTile.notched(
-                  title: const Text('Detailed view'),
+                  title: const Text('Детальный просмотр'),
                   trailing: const CupertinoListTileChevron(),
                   onTap: state.isWifiConnected
                       ? () => Navigator.of(context).pushNamed('/wifi')

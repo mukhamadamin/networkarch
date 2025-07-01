@@ -10,10 +10,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/permissions/permissions.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/helpers.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/permissions/permissions.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/helpers.dart';
 
 class PermissionsView extends StatefulWidget {
   const PermissionsView({super.key});
@@ -44,7 +44,7 @@ class _PermissionsViewState extends State<PermissionsView> {
         return ContentListView(
           children: [
             PermissionCard(
-              title: 'Location',
+              title: 'Местоположение',
               description: Constants.locationPermissionDesc,
               icon: const FaIcon(FontAwesomeIcons.locationArrow),
               iOSicon: const Icon(CupertinoIcons.location),
@@ -59,7 +59,7 @@ class _PermissionsViewState extends State<PermissionsView> {
             PlatformWidget(
               androidBuilder: (_) {
                 return PermissionCard(
-                  title: 'Phone',
+                  title: 'Телефон',
                   description: Constants.phoneStatePermissionDesc,
                   icon: const FaIcon(FontAwesomeIcons.phoneFlip),
                   iOSicon: const Icon(Icons.phone_iphone),

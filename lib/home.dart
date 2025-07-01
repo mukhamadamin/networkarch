@@ -14,12 +14,12 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/introduction/introduction.dart';
-import 'package:network_arch/overview/views/overview_view.dart';
-import 'package:network_arch/permissions/permissions.dart';
-import 'package:network_arch/settings/settings.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/introduction/introduction.dart';
+import 'package:network_scanner/overview/views/overview_view.dart';
+import 'package:network_scanner/permissions/permissions.dart';
+import 'package:network_scanner/settings/settings.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -112,9 +112,8 @@ class _HomeState extends State<Home> {
   Widget _androidBuilder(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _selectedIndex == 0
-            ? const Text('Overview')
-            : const Text('Settings'),
+        title:
+            _selectedIndex == 0 ? const Text('Обзор') : const Text('Настройки'),
       ),
       body: IndexedStack(
         index: _selectedIndex,
@@ -125,12 +124,12 @@ class _HomeState extends State<Home> {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
-            label: 'Overview',
+            label: 'Обзор',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
             selectedIcon: Icon(Icons.settings_rounded),
-            label: 'Settings',
+            label: 'Настройки',
           ),
         ],
         selectedIndex: _selectedIndex,
@@ -145,11 +144,11 @@ class _HomeState extends State<Home> {
       tabBar: CupertinoTabBar(
         items: const [
           BottomNavigationBarItem(
-            label: 'Overview',
+            label: 'Обзор',
             icon: Icon(CupertinoIcons.home),
           ),
           BottomNavigationBarItem(
-            label: 'Settings',
+            label: 'Настройки',
             icon: Icon(CupertinoIcons.settings),
           ),
         ],
@@ -158,18 +157,18 @@ class _HomeState extends State<Home> {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              defaultTitle: 'Overview',
+              defaultTitle: 'Обзор',
               routes: Constants.routes,
               builder: Constants.routes['/overview'],
             );
           case 1:
             return CupertinoTabView(
-              defaultTitle: 'Settings',
+              defaultTitle: 'Настройки',
               routes: Constants.routes,
               builder: Constants.routes['/settings'],
             );
           default:
-            throw Exception('Unexpected tab');
+            throw Exception('Неожиданная вкладка');
         }
       },
     );

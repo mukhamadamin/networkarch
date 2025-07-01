@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 // Widget used to change the used FlexSchemeData index in example 4.
 class ThemePopupMenu extends StatelessWidget {

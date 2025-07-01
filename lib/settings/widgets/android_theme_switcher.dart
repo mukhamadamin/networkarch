@@ -6,8 +6,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 class AndroidThemeSwitcher extends StatefulWidget {
   const AndroidThemeSwitcher({super.key});
@@ -23,7 +23,7 @@ class _AndroidThemeSwitcherState extends State<AndroidThemeSwitcher> {
 
     return Column(
       children: [
-        const SmallDescription(text: 'Theme settings'),
+        const SmallDescription(text: 'Настройки темы'),
         DataCard(
           padding: EdgeInsets.zero,
           child: Column(

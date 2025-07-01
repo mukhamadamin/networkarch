@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:dart_ping/dart_ping.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
+import 'package:network_scanner/constants.dart';
 
 class PingRepository {
   PingRepository();

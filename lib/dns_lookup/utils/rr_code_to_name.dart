@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:network_arch/dns_lookup/utils/rr_code_name.dart';
+import 'package:network_scanner/dns_lookup/utils/rr_code_name.dart';
 
 RrCodeName rrCodeToName(int type) {
   switch (type) {

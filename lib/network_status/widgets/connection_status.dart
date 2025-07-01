@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/network_status.dart';
-import 'package:network_arch/theme/themes.dart';
+import 'package:network_scanner/network_status/network_status.dart';
+import 'package:network_scanner/theme/themes.dart';
 
 class ConnectionStatus extends StatelessWidget {
   const ConnectionStatus(
@@ -30,7 +30,7 @@ class ConnectionStatus extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              isNetworkConnected ? 'Connected' : 'Disconnected',
+              isNetworkConnected ? 'Связанный' : 'Разъединенный',
               style: TextStyle(
                 color: isNetworkConnected
                     ? Themes.getPlatformSuccessColor(context)
@@ -60,7 +60,7 @@ class ConnectionStatus extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Permission issue',
+              'Проблема с разрешением',
               style: TextStyle(
                 color: isNetworkConnected
                     ? Themes.getPlatformSuccessColor(context)
@@ -84,7 +84,7 @@ class ConnectionStatus extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Error',
+              'Ошибка',
               style: TextStyle(
                 color: isNetworkConnected
                     ? Themes.getPlatformSuccessColor(context)
@@ -110,7 +110,7 @@ class ConnectionStatus extends StatelessWidget {
           children: [
             if (!isIOS) ...[
               const Text(
-                'Checking connection...',
+                'Проверка соединения...',
                 style: TextStyle(
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,

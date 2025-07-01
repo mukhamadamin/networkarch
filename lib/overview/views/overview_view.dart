@@ -16,13 +16,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/network_status/bloc/bloc.dart';
-import 'package:network_arch/network_status/views/views.dart';
-import 'package:network_arch/overview/overview.dart';
-import 'package:network_arch/permissions/message_type.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/network_status/bloc/bloc.dart';
+import 'package:network_scanner/network_status/views/views.dart';
+import 'package:network_scanner/overview/overview.dart';
+import 'package:network_scanner/permissions/message_type.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/utils.dart';
 
 class OverviewView extends StatefulWidget {
   const OverviewView({super.key});
@@ -32,7 +32,7 @@ class OverviewView extends StatefulWidget {
 }
 
 class _OverviewViewState extends State<OverviewView> {
-  late final BannerAd _bannerAd;
+  // late final BannerAd _bannerAd;
   bool _isBannerAdReady = false;
 
   late bool _isPremiumGranted;
@@ -58,28 +58,28 @@ class _OverviewViewState extends State<OverviewView> {
     context.read<NetworkStatusBloc>().add(NetworkStatusStreamStarted());
     context.read<NetworkStatusBloc>().add(NetworkStatusExtIPRequested());
 
-    _bannerAd = BannerAd(
-      adUnitId: getAdUnitId(),
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (_) {
-          setState(() {
-            _isBannerAdReady = true;
-          });
-        },
-        onAdFailedToLoad: (ad, err) {
-          if (kDebugMode) {
-            print('Failed to load a banner ad: ${err.message}');
-          }
+    // _bannerAd = BannerAd(
+    //   adUnitId: getAdUnitId(),
+    //   size: AdSize.banner,
+    //   request: const AdRequest(),
+    //   listener: BannerAdListener(
+    //     onAdLoaded: (_) {
+    //       setState(() {
+    //         _isBannerAdReady = false;
+    //       });
+    //     },
+    //     onAdFailedToLoad: (ad, err) {
+    //       if (kDebugMode) {
+    //         print('Failed to load a banner ad: ${err.message}');
+    //       }
 
-          _isBannerAdReady = false;
-          ad.dispose();
-        },
-      ),
-    );
+    //       _isBannerAdReady = false;
+    //       ad.dispose();
+    //     },
+    //   ),
+    // );
 
-    _bannerAd.load();
+    // _bannerAd.load();
 
     _setUpIapAndListenForChanges();
     _setupIapPaywall();
@@ -89,7 +89,7 @@ class _OverviewViewState extends State<OverviewView> {
   void dispose() {
     super.dispose();
 
-    _bannerAd.dispose();
+    // _bannerAd.dispose();
   }
 
   @override
@@ -106,7 +106,7 @@ class _OverviewViewState extends State<OverviewView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('Overview'),
+      largeTitle: const Text('Обзор'),
       child: _buildBody(context),
     );
   }
@@ -121,19 +121,19 @@ class _OverviewViewState extends State<OverviewView> {
                 return Column(
                   children: [
                     const SmallDescription(
-                      text: 'Networks',
+                      text: 'Сети',
                       leftPadding: 8,
                     ),
                     const WifiStatusCard(),
                     const SizedBox(height: Constants.listSpacing),
-                    const CarrierStatusCard(),
-                    const SizedBox(height: Constants.listSpacing),
+                    // const CarrierStatusCard(),
+                    // const SizedBox(height: Constants.listSpacing),
                     const SmallDescription(
-                      text: 'Utilities',
+                      text: 'Услуги',
                       leftPadding: 8,
                     ),
                     ToolCard(
-                      toolName: 'Ping',
+                      toolName: 'Пинг',
                       toolDesc: Constants.pingDesc,
                       onPressed: () => Navigator.pushNamed(
                         context,
@@ -143,7 +143,7 @@ class _OverviewViewState extends State<OverviewView> {
                     ),
                     const SizedBox(height: Constants.listSpacing),
                     ToolCard(
-                      toolName: 'LAN Scanner',
+                      toolName: 'LAN Сканер',
                       toolDesc: Constants.lanScannerDesc,
                       onPressed: state.isWifiConnected
                           ? () => Navigator.pushNamed(context, '/tools/lan')
@@ -151,51 +151,51 @@ class _OverviewViewState extends State<OverviewView> {
                     ),
                     const SizedBox(height: Constants.listSpacing),
                     ToolCard(
-                      toolName: 'Wake On LAN',
+                      toolName: 'Анализ и отчёт сети',
                       toolDesc: Constants.wolDesc,
                       onPressed: state.isWifiConnected
                           ? () => Navigator.pushNamed(context, '/tools/wol')
                           : null,
                     ),
                     const SizedBox(height: Constants.listSpacing),
-                    ToolCard(
-                      toolName: 'IP Geolocation',
-                      toolDesc: Constants.ipGeoDesc,
-                      isPremium: !_isPremiumAvail,
-                      onPressed: _isPremiumAvail
-                          ? () => Navigator.pushNamed(context, '/tools/ip_geo')
-                          : () => showPremiumBottomSheet(context),
-                    ),
-                    const SizedBox(height: Constants.listSpacing),
-                    ToolCard(
-                      toolName: 'Whois',
-                      toolDesc: Constants.whoisDesc,
-                      isPremium: !_isPremiumAvail,
-                      onPressed: _isPremiumAvail
-                          ? () => Navigator.pushNamed(context, '/tools/whois')
-                          : () => showPremiumBottomSheet(context),
-                    ),
-                    const SizedBox(height: Constants.listSpacing),
-                    ToolCard(
-                      toolName: 'DNS Lookup',
-                      toolDesc: Constants.dnsDesc,
-                      isPremium: !_isPremiumAvail,
-                      onPressed: _isPremiumAvail
-                          ? () => Navigator.pushNamed(
-                                context,
-                                '/tools/dns_lookup',
-                              )
-                          : () => showPremiumBottomSheet(context),
-                    ),
-                    const SizedBox(height: Constants.listSpacing),
-                    if (kDebugMode) const DebugSection(),
-                    if (!_isPremiumGranted && _isBannerAdReady)
-                      Container(
-                        alignment: Alignment.center,
-                        width: _bannerAd.size.width.toDouble(),
-                        height: _bannerAd.size.height.toDouble(),
-                        child: AdWidget(ad: _bannerAd),
-                      ),
+                    // ToolCard(
+                    //   toolName: 'IP Геолокация',
+                    //   toolDesc: Constants.ipGeoDesc,
+                    //   isPremium: !_isPremiumAvail,
+                    //   onPressed: _isPremiumAvail
+                    //       ? () => Navigator.pushNamed(context, '/tools/ip_geo')
+                    //       : () => showPremiumBottomSheet(context),
+                    // ),
+                    // const SizedBox(height: Constants.listSpacing),
+                    // ToolCard(
+                    //   toolName: 'Кто',
+                    //   toolDesc: Constants.whoisDesc,
+                    //   isPremium: !_isPremiumAvail,
+                    //   onPressed: _isPremiumAvail
+                    //       ? () => Navigator.pushNamed(context, '/tools/whois')
+                    //       : () => showPremiumBottomSheet(context),
+                    // ),
+                    // const SizedBox(height: Constants.listSpacing),
+                    // ToolCard(
+                    //   toolName: 'DNS Поиск',
+                    //   toolDesc: Constants.dnsDesc,
+                    //   isPremium: !_isPremiumAvail,
+                    //   onPressed: _isPremiumAvail
+                    //       ? () => Navigator.pushNamed(
+                    //             context,
+                    //             '/tools/dns_lookup',
+                    //           )
+                    //       : () => showPremiumBottomSheet(context),
+                    // ),
+                    // const SizedBox(height: Constants.listSpacing),
+                    // if (kDebugMode) const DebugSection(),
+                    // if (!_isPremiumGranted && _isBannerAdReady)
+                    // Container(
+                    //   alignment: Alignment.center,
+                    //   width: _bannerAd.size.width.toDouble(),
+                    //   height: _bannerAd.size.height.toDouble(),
+                    //   child: AdWidget(ad: _bannerAd),
+                    // ),
                   ],
                 );
               },
@@ -203,13 +203,13 @@ class _OverviewViewState extends State<OverviewView> {
                 return Column(
                   children: [
                     const WifiStatusCard(),
-                    const CarrierStatusCard(),
+                    // const CarrierStatusCard(),
                     CupertinoListSection.insetGrouped(
                       hasLeading: false,
-                      header: const Text('Utilities'),
+                      header: const Text('Услуги'),
                       children: [
                         ToolCard(
-                          toolName: 'Ping',
+                          toolName: 'Пинг',
                           toolDesc: Constants.pingDesc,
                           onPressed: () => Navigator.pushNamed(
                             context,
@@ -226,60 +226,60 @@ class _OverviewViewState extends State<OverviewView> {
                         //       : null,
                         // ),
                         ToolCard(
-                          toolName: 'Wake on LAN',
+                          toolName: 'Анализ и отчёт сети',
                           toolDesc: Constants.wolDesc,
                           onPressed: state.isWifiConnected
                               ? () => Navigator.pushNamed(context, '/tools/wol')
                               : null,
                         ),
-                        ToolCard(
-                          toolName: 'IP Geolocation',
-                          toolDesc: Constants.ipGeoDesc,
-                          isPremium: !_isPremiumAvail,
-                          onPressed: _isPremiumAvail
-                              ? () => Navigator.pushNamed(
-                                    context,
-                                    '/tools/ip_geo',
-                                  )
-                              : () => showPremiumBottomSheet(context),
-                        ),
-                        ToolCard(
-                          toolName: 'Whois',
-                          toolDesc: Constants.whoisDesc,
-                          isPremium: !_isPremiumAvail,
-                          onPressed: _isPremiumAvail
-                              ? () => Navigator.pushNamed(
-                                    context,
-                                    '/tools/whois',
-                                  )
-                              : () => showPremiumBottomSheet(context),
-                        ),
-                        ToolCard(
-                          toolName: 'DNS Lookup',
-                          toolDesc: Constants.dnsDesc,
-                          isPremium: !_isPremiumAvail,
-                          onPressed: _isPremiumAvail
-                              ? () => Navigator.pushNamed(
-                                    context,
-                                    '/tools/dns_lookup',
-                                  )
-                              : () => showPremiumBottomSheet(context),
-                        ),
+                        // ToolCard(
+                        //   toolName: 'IP Геолокация',
+                        //   toolDesc: Constants.ipGeoDesc,
+                        //   isPremium: !_isPremiumAvail,
+                        //   onPressed: _isPremiumAvail
+                        //       ? () => Navigator.pushNamed(
+                        //             context,
+                        //             '/tools/ip_geo',
+                        //           )
+                        //       : () => showPremiumBottomSheet(context),
+                        // ),
+                        // ToolCard(
+                        //   toolName: 'Кто',
+                        //   toolDesc: Constants.whoisDesc,
+                        //   isPremium: !_isPremiumAvail,
+                        //   onPressed: _isPremiumAvail
+                        //       ? () => Navigator.pushNamed(
+                        //             context,
+                        //             '/tools/whois',
+                        //           )
+                        //       : () => showPremiumBottomSheet(context),
+                        // ),
+                        // ToolCard(
+                        //   toolName: 'DNS Поиск',
+                        //   toolDesc: Constants.dnsDesc,
+                        //   isPremium: !_isPremiumAvail,
+                        //   onPressed: _isPremiumAvail
+                        //       ? () => Navigator.pushNamed(
+                        //             context,
+                        //             '/tools/dns_lookup',
+                        //           )
+                        //       : () => showPremiumBottomSheet(context),
+                        // ),
                       ],
                     ),
                     if (kDebugMode) const DebugSection(),
-                    if (!_isPremiumGranted && _isBannerAdReady)
-                      Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            width: _bannerAd.size.width.toDouble(),
-                            height: _bannerAd.size.height.toDouble(),
-                            child: AdWidget(ad: _bannerAd),
-                          ),
-                          const SizedBox(height: Constants.listSpacing),
-                        ],
-                      ),
+                    // if (!_isPremiumGranted && _isBannerAdReady)
+                    //   Column(
+                    //     children: [
+                    //       Container(
+                    //         alignment: Alignment.center,
+                    //         width: _bannerAd.size.width.toDouble(),
+                    //         height: _bannerAd.size.height.toDouble(),
+                    //         child: AdWidget(ad: _bannerAd),
+                    //       ),
+                    //       const SizedBox(height: Constants.listSpacing),
+                    //     ],
+                    //   ),
                   ],
                 );
               },

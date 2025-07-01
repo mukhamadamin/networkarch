@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/package_info/package_info.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/package_info/package_info.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class PackageInfoView extends StatelessWidget {
   const PackageInfoView({super.key});

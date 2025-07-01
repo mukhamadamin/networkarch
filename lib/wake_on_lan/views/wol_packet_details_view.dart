@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/wake_on_lan/wake_on_lan.dart';
 
 class WolPacketDetailsView extends StatelessWidget {
   const WolPacketDetailsView(this.response, {super.key});
@@ -22,7 +22,7 @@ class WolPacketDetailsView extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Packet details'),
+        title: const Text('Сведения о пакете'),
       ),
       body: _buildBody(context),
     );
@@ -30,7 +30,7 @@ class WolPacketDetailsView extends StatelessWidget {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('Packet details'),
+      largeTitle: const Text('Сведения о пакете'),
       child: _buildBody(context),
     );
   }
@@ -42,15 +42,15 @@ class WolPacketDetailsView extends StatelessWidget {
           RoundedList(
             children: [
               ListTextLine(
-                widgetL: const Text('MAC address'),
+                widgetL: const Text('MAC-адрес'),
                 widgetR: Text(response.mac.address),
               ),
               ListTextLine(
-                widgetL: const Text('IP address'),
+                widgetL: const Text('ip-адрес'),
                 widgetR: Text(response.ipv4.address),
               ),
               HexBytesViewer(
-                title: 'Magic packet bytes',
+                title: 'Байты волшебного пакета',
                 bytes: response.packetBytes,
               ),
             ],
@@ -62,17 +62,17 @@ class WolPacketDetailsView extends StatelessWidget {
           RoundedList(
             children: [
               ListTextLine(
-                widgetL: const Text('MAC address'),
+                widgetL: const Text('MAC-адрес'),
                 widgetR: Text(response.mac.address),
               ),
               ListTextLine(
-                widgetL: const Text('IP address'),
+                widgetL: const Text('ip-адрес'),
                 widgetR: Text(response.ipv4.address),
               ),
             ],
           ),
           CupertinoListSection.insetGrouped(
-            header: const Text('Magic packet bytes'),
+            header: const Text('Байты волшебного пакета'),
             children: [
               HexBytesViewer(
                 bytes: response.packetBytes,

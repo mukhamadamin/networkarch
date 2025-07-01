@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // Project imports:
-import 'package:network_arch/whois/repository/whois_repository.dart';
+import 'package:network_scanner/whois/repository/whois_repository.dart';
 
 part 'whois_event.dart';
 part 'whois_state.dart';

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 class IosThemeSwitcher extends StatefulWidget {
   const IosThemeSwitcher({super.key});
@@ -31,9 +31,9 @@ class _IosThemeSwitcherState extends State<IosThemeSwitcher> {
       groupValue: _selectedThemeMode,
       onValueChanged: _onThemeModeChanged,
       children: const <ThemeMode, Widget>{
-        ThemeMode.light: Text('Light'),
-        ThemeMode.dark: Text('Dark'),
-        ThemeMode.system: Text('System'),
+        ThemeMode.light: Text('Светлая'),
+        ThemeMode.dark: Text('Тёмная'),
+        ThemeMode.system: Text('Системная'),
       },
     );
   }

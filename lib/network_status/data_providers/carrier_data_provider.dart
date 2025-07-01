@@ -5,7 +5,7 @@ import 'package:carrier_info/carrier_info.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/models/models.dart';
+import 'package:network_scanner/network_status/models/models.dart';
 
 class CarrierDataProvider {
   Future<CarrierInfoModel> getCellularData() async {

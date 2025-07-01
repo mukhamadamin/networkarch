@@ -7,11 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/dns_lookup/dns_lookup.dart';
-import 'package:network_arch/dns_lookup/widgets/dns_record_card.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/dns_lookup/dns_lookup.dart';
+import 'package:network_scanner/dns_lookup/widgets/dns_record_card.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/utils.dart';
 
 class DnsLookupView extends StatefulWidget {
   const DnsLookupView({super.key});
@@ -47,14 +47,14 @@ class _DnsLookupViewState extends State<DnsLookupView> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DNS Lookup'),
+        title: const Text('DNS Поиск'),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: Constants.bodyPadding.right),
             child: TextButton(
               onPressed: _shouldCheckButtonBeActive ? _handleCheck : null,
               child: Text(
-                'Check',
+                'Проверить',
                 style: TextStyle(
                   color:
                       _shouldCheckButtonBeActive ? Colors.green : Colors.grey,
@@ -71,12 +71,12 @@ class _DnsLookupViewState extends State<DnsLookupView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('DNS Lookup'),
+      largeTitle: const Text('DNS Поиск'),
       navBarTrailingWidget: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: _handleCheck,
         child: Text(
-          'Check',
+          'Проверить',
           style: TextStyle(
             color: CupertinoColors.systemGreen.resolveFrom(context),
           ),
@@ -99,7 +99,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
               Flexible(
                 flex: 3,
                 child: DomainTextField(
-                  label: 'Domain',
+                  label: 'Домен',
                   controller: _targetDomainController,
                   expands: true,
                   onChanged: (_) {
@@ -116,7 +116,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                   child: DropdownButtonFormField<RrCodeName>(
                     items: _getQueryTypes(),
                     value: _selectedDnsQueryType,
-                    hint: const Text('Type'),
+                    hint: const Text('Тип'),
                     icon: const Icon(Icons.arrow_downward_rounded),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -156,7 +156,7 @@ class _DnsLookupViewState extends State<DnsLookupView> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'Found ${state.response.answer.length} records',
+                        'Найдено ${state.response.answer.length} записей',
                         style: isIOS
                             ? CupertinoTheme.of(context)
                                 .textTheme

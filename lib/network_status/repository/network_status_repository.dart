@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/network_status.dart';
+import 'package:network_scanner/network_status/network_status.dart';
 
 class NetworkStatusRepository {
   final _wifiDataProvider = WifiDataProvider();

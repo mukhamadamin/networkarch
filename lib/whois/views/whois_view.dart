@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
-import 'package:network_arch/whois/whois.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/utils.dart';
+import 'package:network_scanner/whois/whois.dart';
 
 class WhoisView extends StatefulWidget {
   const WhoisView({super.key});
@@ -52,14 +52,14 @@ class _WhoisViewState extends State<WhoisView> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Whois'),
+        title: const Text('Кто'),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: Constants.bodyPadding.right),
             child: TextButton(
               onPressed: _shouldCheckButtonBeActive ? _handleCheck : null,
               child: Text(
-                'Check',
+                'Проверить',
                 style: TextStyle(
                   color:
                       _shouldCheckButtonBeActive ? Colors.green : Colors.grey,
@@ -76,12 +76,12 @@ class _WhoisViewState extends State<WhoisView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('Whois'),
+      largeTitle: const Text('Кто'),
       navBarTrailingWidget: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: _handleCheck,
         child: Text(
-          'Check',
+          'Проверить',
           style: TextStyle(
             color: CupertinoDynamicColor.resolve(
               CupertinoColors.activeGreen,

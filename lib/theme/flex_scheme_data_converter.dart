@@ -3,7 +3,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 class FlexSchemeDataConverter
     implements JsonConverter<FlexSchemeData, Map<String, dynamic>> {

@@ -1,156 +1,141 @@
-// Flutter imports:
-import 'package:flutter/cupertino.dart';
+import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lan_scanner/lan_scanner.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 
-// Project imports:
-import 'package:network_arch/lan_scanner/bloc/lan_scanner_bloc.dart';
-import 'package:network_arch/lan_scanner/widgets/host_card.dart';
-import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/shared/shared.dart';
-
-class LanScannerView extends StatefulWidget {
-  const LanScannerView({super.key});
-
+class NetworkPentestScreen extends StatefulWidget {
   @override
-  _LanScannerViewState createState() => _LanScannerViewState();
+  _NetworkPentestScreenState createState() => _NetworkPentestScreenState();
 }
 
-class _LanScannerViewState extends State<LanScannerView> {
-  final _appBarKey = GlobalKey<ActionAppBarState>();
-  final _listKey = GlobalKey<AnimatedListState>();
-  late final AnimatedListModel<Host> _hosts;
-  late final LanScannerBloc _bloc;
+class _NetworkPentestScreenState extends State<NetworkPentestScreen> {
+  final LanScanner scanner = LanScanner();
+  final NetworkInfo networkInfo = NetworkInfo();
+  List<Host> hosts = [];
+  bool isScanning = false;
+  String? wifiIP;
+  String? subnet;
+  String? gateway;
+
+  Future<void> getNetworkInfo() async {
+    wifiIP = await networkInfo.getWifiIP();
+    gateway = await networkInfo.getWifiGatewayIP();
+    subnet = wifiIP != null ? ipToCSubnet(wifiIP!) : null;
+    setState(() {});
+  }
+
+  Future<void> scanNetwork() async {
+    if (subnet == null) return;
+    setState(() {
+      isScanning = true;
+      hosts.clear();
+    });
+
+    final stream = scanner.icmpScan(subnet!, progressCallback: (progress) {
+      print('Сканирование: $progress%');
+    });
+
+    stream.listen((Host host) {
+      setState(() {
+        hosts.add(host);
+      });
+    }).onDone(() {
+      setState(() {
+        isScanning = false;
+      });
+    });
+  }
+
+  Future<void> scanPorts(String ip) async {
+    for (int port = 20; port <= 1024; port++) {
+      final ping = Ping(ip, count: 1, timeout: 1);
+      ping.stream.listen((event) {
+        if (event.response != null) {
+          print('Port $port open on $ip');
+        }
+      });
+    }
+  }
+
+  String ipToCSubnet(String ip) {
+    var parts = ip.split('.');
+    return '${parts[0]}.${parts[1]}.${parts[2]}';
+  }
 
   @override
   void initState() {
     super.initState();
-
-    _hosts =
-        AnimatedListModel(listKey: _listKey, removedItemBuilder: _buildItem);
-    _bloc = context.read<LanScannerBloc>();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _bloc.add(LanScannerStopped());
+    getNetworkInfo();
   }
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIOS,
-    );
-  }
-
-  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: ActionAppBar(
-        title: 'LAN Scanner',
-        isActive: true,
-        onStartPressed: _handleStart,
-        onStopPressed: _handleStop,
-        key: _appBarKey,
+      backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        title: Text('Анализ сети', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        elevation: 0,
       ),
-      body: _buildBody(context),
-    );
-  }
-
-  Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      largeTitle: const Text('Lan Scanner'),
-      navBarTrailingWidget: BlocBuilder<LanScannerBloc, LanScannerState>(
-        builder: (context, state) {
-          return state is LanScannerRunStart ||
-                  state is LanScannerRunProgressUpdate
-              ? CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: _handleStop,
-                  child: const Text('Stop'),
-                )
-              : CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: _handleStart,
-                  child: const Text('Start'),
-                );
-        },
-      ),
-      child: _buildBody(context),
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return ContentListView(
-      children: [
-        BlocListener<LanScannerBloc, LanScannerState>(
-          listener: _lanScannerStateListener,
-          child: AnimatedList(
-            key: _listKey,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            initialItemCount: _hosts.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                _hosts[index],
-              );
-            },
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('IP: $wifiIP', style: TextStyle(color: Colors.white70)),
+            Text('Сеть: $gateway', style: TextStyle(color: Colors.white70)),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+                onPressed: isScanning ? null : scanNetwork,
+                child:
+                    Text(isScanning ? 'Сканирование...' : 'Сканировать сеть'),
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: hosts.isEmpty
+                  ? Center(
+                      child: isScanning
+                          ? CircularProgressIndicator()
+                          : Text('Нет найденных хостов',
+                              style: TextStyle(color: Colors.white70)),
+                    )
+                  : ListView.builder(
+                      itemCount: hosts.length,
+                      itemBuilder: (context, index) {
+                        final host = hosts[index];
+                        return Card(
+                          color: Colors.black87,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListTile(
+                            title: Text(host.internetAddress.address,
+                                style: TextStyle(color: Colors.white)),
+                            subtitle: Text(
+                                'Доступно: ${host.internetAddress.isLinkLocal ? "Да" : "Нет"}',
+                                style: TextStyle(color: Colors.white70)),
+                            trailing: IconButton(
+                              icon: Icon(Icons.search, color: Colors.blue),
+                              onPressed: () =>
+                                  scanPorts(host.internetAddress.address),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
-  }
-
-  void _lanScannerStateListener(
-    BuildContext context,
-    LanScannerState state,
-  ) {
-    if (state is LanScannerRunProgressUpdate) {
-      _appBarKey.currentState?.setIndicatorProgress(
-        state.progress / 100,
-      );
-    }
-
-    if (state is LanScannerRunComplete) {
-      _appBarKey.currentState?.toggleAnimation();
-    }
-
-    if (state is LanScannerRunNewHost) {
-      _hosts.insert(_hosts.length, state.host);
-    }
-
-    if (state is LanScannerRunStop) {
-      _appBarKey.currentState?.setIndicatorProgress(0);
-    }
-  }
-
-  FadeTransition _buildItem(
-    BuildContext context,
-    Animation<double> animation,
-    Host item,
-  ) {
-    return FadeTransition(
-      opacity: animation.drive(_hosts.fadeTween),
-      child: HostCard(item: item),
-    );
-  }
-
-  void _handleStop() {
-    context.read<LanScannerBloc>().add(LanScannerStopped());
-  }
-
-  Future<void> _handleStart() async {
-    await _hosts.removeAllElements(context);
-    _appBarKey.currentState?.setIndicatorProgress(null);
-
-    if (!mounted) return;
-    context.read<LanScannerBloc>().add(LanScannerStarted());
   }
 }

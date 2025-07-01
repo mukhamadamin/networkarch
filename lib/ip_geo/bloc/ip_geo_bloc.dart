@@ -6,8 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // Project imports:
-import 'package:network_arch/ip_geo/models/ip_geo_response.dart';
-import 'package:network_arch/ip_geo/repository/ip_geo_repository.dart';
+import 'package:network_scanner/ip_geo/models/ip_geo_response.dart';
+import 'package:network_scanner/ip_geo/repository/ip_geo_repository.dart';
 
 part 'ip_geo_event.dart';
 part 'ip_geo_state.dart';

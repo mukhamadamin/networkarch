@@ -8,7 +8,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/theme/theme.dart';
+import 'package:network_scanner/theme/theme.dart';
 
 part 'theme_event.dart';
 part 'theme_state.dart';

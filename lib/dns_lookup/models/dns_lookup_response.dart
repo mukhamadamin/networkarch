@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:network_arch/dns_lookup/models/dns_question.dart';
-import 'package:network_arch/dns_lookup/models/dns_record.dart';
+import 'package:network_scanner/dns_lookup/models/dns_question.dart';
+import 'package:network_scanner/dns_lookup/models/dns_record.dart';
 
 part 'dns_lookup_response.g.dart';
 

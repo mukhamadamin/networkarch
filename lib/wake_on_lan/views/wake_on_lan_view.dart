@@ -1,311 +1,197 @@
-// Flutter imports:
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:network_info_plus/network_info_plus.dart';
+import 'package:dart_ping/dart_ping.dart';
+import 'dart:io';
 
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/themes.dart';
-import 'package:network_arch/utils/utils.dart';
-import 'package:network_arch/wake_on_lan/wake_on_lan.dart';
-
-class WakeOnLanView extends StatefulWidget {
-  const WakeOnLanView({super.key});
-
+class PentestScreen extends StatefulWidget {
   @override
-  _WakeOnLanViewState createState() => _WakeOnLanViewState();
+  _PentestScreenState createState() => _PentestScreenState();
 }
 
-class _WakeOnLanViewState extends State<WakeOnLanView> {
-  final ipv4TextFieldController = TextEditingController();
-  bool _isValidIpv4 = true;
-
-  final macTextFieldController = TextEditingController();
-  bool _isValidMac = true;
-
-  String get ipv4 => ipv4TextFieldController.text;
-  String get mac => macTextFieldController.text;
-
-  bool _shouldSendButtonBeActive = false;
-
-  final _listKey = GlobalKey<AnimatedListState>();
-
-  late final AnimatedListModel<WolResponseModel> wolResponses;
+class _PentestScreenState extends State<PentestScreen> {
+  String? _wifiName;
+  String? _wifiBSSID;
+  String? _wifiIP;
+  String? _wifiGateway;
+  List<String> _connectedDevices = [];
+  List<String> _openPorts = [];
 
   @override
   void initState() {
     super.initState();
+    _getNetworkInfo();
+  }
 
-    wolResponses = AnimatedListModel(
-      listKey: _listKey,
-      removedItemBuilder: _buildItem,
-    );
+  Future<void> _getNetworkInfo() async {
+    final info = NetworkInfo();
+    _wifiName = await info.getWifiName();
+    _wifiBSSID = await info.getWifiBSSID();
+    _wifiIP = await info.getWifiIP();
+    _wifiGateway = await info.getWifiGatewayIP();
+    setState(() {});
+  }
 
-    if (kDebugMode) {
-      ipv4TextFieldController.text = '192.168.0.99';
-      macTextFieldController.text = '2A:D8:BB:E3:33:D1';
+  void _scanNetwork() {
+    if (_wifiGateway != null) {
+      for (int i = 1; i < 255; i++) {
+        String targetIP =
+            _wifiGateway!.substring(0, _wifiGateway!.lastIndexOf('.') + 1) +
+                '$i';
+        final ping = Ping(targetIP, count: 3);
+
+        ping.stream.listen((event) {
+          if (event.response != null) {
+            setState(() {
+              if (!_connectedDevices.contains(targetIP)) {
+                _connectedDevices.add(targetIP);
+              }
+            });
+            _scanPorts(targetIP);
+          }
+        });
+      }
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  void _scanPorts(String ip) async {
+    List<int> portsToCheck = [
+      21,
+      22,
+      23,
+      25,
+      53,
+      80,
+      110,
+      143,
+      443,
+      3306,
+      3389
+    ];
+    for (var port in portsToCheck) {
+      try {
+        Socket socket =
+            await Socket.connect(ip, port, timeout: Duration(seconds: 1));
+        setState(() {
+          _openPorts.add('$ip:$port - открыт');
+        });
+        socket.destroy();
+      } catch (_) {}
+    }
+  }
 
-    ipv4TextFieldController.dispose();
-    macTextFieldController.dispose();
+  void _showReport() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Отчёт по безопасности сети'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Wi-Fi сеть: $_wifiName'),
+                Text('BSSID: $_wifiBSSID'),
+                Text('IP-адрес: $_wifiIP'),
+                Text('Шлюз: $_wifiGateway'),
+                Divider(),
+                Text('Возможные подключения:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                ..._connectedDevices.map((e) => Text(e)),
+                Divider(),
+                Text('Открытые порты:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                ..._openPorts.map((e) => Text(e)),
+                Divider(),
+                Text('Рекомендации:',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text('- Используйте сложные пароли для Wi-Fi'),
+                Text('- Отключите ненужные открытые порты'),
+                Text('- Включите шифрование WPA2/WPA3'),
+                Text('- Ограничьте доступ к сети'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Закрыть'),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return PlatformWidget(
-      androidBuilder: _buildAndroid,
-      iosBuilder: _buildIOS,
-    );
-  }
-
-  Widget _buildAndroid(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: const Text('Wake on LAN'),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: Constants.bodyPadding.right),
-            child: TextButton(
-              onPressed: _shouldSendButtonBeActive ? _handleSend : null,
-              child: Text(
-                'Send',
-                style: TextStyle(
-                  color: _shouldSendButtonBeActive ? Colors.green : Colors.grey,
-                  fontSize: 16,
+        title: Text('Wi-Fi Пентест', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        elevation: 0,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Wi-Fi сеть: $_wifiName',
+                style: TextStyle(color: Colors.white70)),
+            Text('BSSID: $_wifiBSSID', style: TextStyle(color: Colors.white70)),
+            Text('IP-адрес: $_wifiIP', style: TextStyle(color: Colors.white70)),
+            Text('Шлюз: $_wifiGateway',
+                style: TextStyle(color: Colors.white70)),
+            SizedBox(height: 20),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
+                onPressed: _scanNetwork,
+                child: Text('Сканировать сеть'),
               ),
             ),
-          ),
-        ],
-      ),
-      body: _buildBody(context),
-    );
-  }
-
-  Widget _buildIOS(BuildContext context) {
-    return CupertinoContentScaffold(
-      largeTitle: const Text('Wake on LAN'),
-      navBarTrailingWidget: CupertinoButton(
-        padding: EdgeInsets.zero,
-        onPressed: _handleSend,
-        child: Text(
-          'Send packet',
-          style: TextStyle(
-            color: CupertinoColors.systemGreen.resolveFrom(context),
-          ),
-        ),
-      ),
-      child: _buildBody(context),
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return ContentListView(
-      usePaddingOniOS: true,
-      children: [
-        BlocConsumer<WakeOnLanBloc, WakeOnLanState>(
-          listener: _wakeOnLanStateListener,
-          builder: (context, state) {
-            return Column(
-              children: [
-                DomainTextField(
-                  controller: ipv4TextFieldController,
-                  label: 'IPv4 address',
-                  errorText: _isValidIpv4 ? null : 'Invalid IPv4 address',
-                  keyboardType: TextInputType.number,
-                  onChanged: (_) {
-                    setState(() {
-                      _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                    });
-                  },
+            SizedBox(height: 10),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 ),
-                const SizedBox(height: 10),
-                DomainTextField(
-                  controller: macTextFieldController,
-                  label: 'MAC address [XX:XX:XX:XX:XX:XX]',
-                  errorText: _isValidMac ? null : 'Invalid MAC address',
-                  keyboardType: TextInputType.number,
-                  onChanged: (_) {
-                    setState(() {
-                      _shouldSendButtonBeActive = _areTextFieldsNotEmpty();
-                    });
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-        const SizedBox(height: 10),
-        PlatformWidget(
-          androidBuilder: (_) => AnimatedList(
-            key: _listKey,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            initialItemCount: wolResponses.length,
-            itemBuilder: (context, index, animation) {
-              return _buildItem(
-                context,
-                animation,
-                wolResponses[index],
-              );
-            },
-          ),
-          iosBuilder: (_) => CupertinoListSection.insetGrouped(
-            margin: EdgeInsets.zero,
-            children: [
-              AnimatedList(
-                key: _listKey,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                initialItemCount: wolResponses.length,
-                itemBuilder: (context, index, animation) {
-                  return _buildItem(
-                    context,
-                    animation,
-                    wolResponses[index],
-                  );
+                onPressed: _showReport,
+                child: Text('Показать отчёт'),
+              ),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _connectedDevices.length + _openPorts.length,
+                itemBuilder: (context, index) {
+                  if (index < _connectedDevices.length) {
+                    return ListTile(
+                      title: Text(_connectedDevices[index],
+                          style: TextStyle(color: Colors.white)),
+                    );
+                  } else {
+                    return ListTile(
+                      title: Text(_openPorts[index - _connectedDevices.length],
+                          style: TextStyle(color: Colors.white)),
+                    );
+                  }
                 },
               ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _wakeOnLanStateListener(BuildContext context, WakeOnLanState state) {
-    final isIos = Theme.of(context).platform == TargetPlatform.iOS;
-
-    if (state is WakeOnLanIPValidationFailure) {
-      _isValidIpv4 = false;
-      _isValidMac = true;
-
-      if (isIos) {
-        showCupertinoDialog<void>(
-          context: context,
-          builder: Constants.wolIpValidationError,
-        );
-      }
-    }
-
-    if (state is WakeOnLanMACValidationFailure) {
-      _isValidIpv4 = true;
-      _isValidMac = false;
-
-      if (isIos) {
-        showCupertinoDialog<void>(
-          context: context,
-          builder: Constants.wolMacValidationError,
-        );
-      }
-    }
-
-    if (state is WakeOnLanIPandMACValidationFailure) {
-      _isValidIpv4 = false;
-      _isValidMac = false;
-
-      if (isIos) {
-        showCupertinoDialog<void>(
-          context: context,
-          builder: Constants.wolIpAndMacValidationError,
-        );
-      }
-    }
-
-    if (state is WakeOnLanSuccess) {
-      _isValidIpv4 = true;
-      _isValidMac = true;
-
-      final response = WolResponseModel(
-        state.ipv4,
-        state.mac,
-        state.packetBytes,
-        WolStatus.success,
-      );
-      wolResponses.insert(wolResponses.length, response);
-    }
-  }
-
-  Widget _buildItem(
-    BuildContext context,
-    Animation<double> animation,
-    WolResponseModel item,
-  ) {
-    return FadeTransition(
-      opacity: animation.drive(wolResponses.fadeTween),
-      child: PlatformWidget(
-        androidBuilder: (_) => DataCard(
-          padding: EdgeInsets.zero,
-          child: ListTile(
-            leading: item.status == WolStatus.success
-                ? const StatusCard(
-                    color: Colors.green,
-                    text: 'Success',
-                  )
-                : const StatusCard(
-                    color: Colors.red,
-                    text: 'Error',
-                  ),
-            title: Text(item.mac.address),
-            subtitle: Text(item.ipv4.address),
-            trailing: const Icon(Icons.navigate_next),
-            onTap: () => _handleCardTap(item),
-          ),
-        ),
-        iosBuilder: (_) => CupertinoListTile.notched(
-          leading: item.status == WolStatus.success
-              ? Icon(
-                  CupertinoIcons.check_mark_circled_solid,
-                  color: Themes.getPlatformSuccessColor(context),
-                )
-              : Icon(
-                  CupertinoIcons.xmark_circle_fill,
-                  color: Themes.getPlatformErrorColor(context),
-                ),
-          title: Text(item.mac.address),
-          subtitle: Text(item.ipv4.address),
-          trailing: const CupertinoListTileChevron(),
-          onTap: () => _handleCardTap(item),
+            ),
+          ],
         ),
       ),
-    );
-  }
-
-  bool _areTextFieldsNotEmpty() {
-    return ipv4TextFieldController.text.isNotEmpty &&
-        macTextFieldController.text.isNotEmpty;
-  }
-
-  void _handleSend() {
-    context.read<WakeOnLanBloc>().add(
-          WakeOnLanRequested(
-            ipv4: ipv4,
-            macAddress: mac,
-          ),
-        );
-
-    hideKeyboard(context);
-  }
-
-  void _handleCardTap(WolResponseModel response) {
-    Navigator.of(context).push<void>(
-      Theme.of(context).platform == TargetPlatform.iOS
-          ? CupertinoPageRoute(
-              builder: (_) => WolPacketDetailsView(response),
-            )
-          : MaterialPageRoute(
-              builder: (_) => WolPacketDetailsView(response),
-            ),
     );
   }
 }

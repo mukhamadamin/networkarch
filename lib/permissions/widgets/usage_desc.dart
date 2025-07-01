@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
+import 'package:network_scanner/constants.dart';
 
 class UsageDesc extends StatelessWidget {
   const UsageDesc({super.key});

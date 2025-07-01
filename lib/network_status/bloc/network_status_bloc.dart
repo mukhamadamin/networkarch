@@ -9,8 +9,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/models/models.dart';
-import 'package:network_arch/network_status/repository/repository.dart';
+import 'package:network_scanner/network_status/models/models.dart';
+import 'package:network_scanner/network_status/repository/repository.dart';
 
 part 'network_status_event.dart';
 part 'network_status_state.dart';

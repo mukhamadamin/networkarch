@@ -2,8 +2,8 @@
 import 'package:flutter/cupertino.dart';
 
 // Project imports:
-import 'package:network_arch/network_status/widgets/adaptive_button.dart';
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_scanner/network_status/widgets/adaptive_button.dart';
+import 'package:network_scanner/shared/shared.dart';
 
 class ClearListButton extends StatelessWidget {
   const ClearListButton({
@@ -25,7 +25,7 @@ class ClearListButton extends StatelessWidget {
     return AdaptiveButton(
       buttonType: ButtonType.filledTonal,
       onPressed: onPressed,
-      child: const Text('Clear list'),
+      child: const Text('Очистить список'),
     );
   }
 
@@ -34,7 +34,7 @@ class ClearListButton extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       borderRadius: BorderRadius.circular(10),
       onPressed: onPressed,
-      child: const Text('Clear list'),
+      child: const Text('Очистить список'),
     );
   }
 }

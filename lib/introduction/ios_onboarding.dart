@@ -7,8 +7,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/permissions/permissions.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/permissions/permissions.dart';
 
 class IosOnboarding extends StatelessWidget {
   const IosOnboarding({
@@ -25,11 +25,11 @@ class IosOnboarding extends StatelessWidget {
       },
       widgetAboveBottomButton: const CupertinoButton(
         onPressed: openAppSettings,
-        child: Text('Open App Settings'),
+        child: Text('Откройте настройки приложения'),
       ),
       pages: [
         WhatsNewPage(
-          title: const Text('Welcome to NetworkArch'),
+          title: const Text('Добро пожаловать в NetworkArch'),
           features: [
             const WhatsNewFeature(
               title: Text(Constants.wifiFeatureTitle),
@@ -38,14 +38,14 @@ class IosOnboarding extends StatelessWidget {
                 CupertinoIcons.wifi,
               ),
             ),
-            WhatsNewFeature(
-              title: const Text(Constants.carrierFeatureTitle),
-              description: const Text(Constants.carrierFeatureDesc),
-              icon: Icon(
-                CupertinoIcons.antenna_radiowaves_left_right,
-                color: CupertinoColors.activeGreen.resolveFrom(context),
-              ),
-            ),
+            // WhatsNewFeature(
+            //   title: const Text(Constants.carrierFeatureTitle),
+            //   description: const Text(Constants.carrierFeatureDesc),
+            //   icon: Icon(
+            //     CupertinoIcons.antenna_radiowaves_left_right,
+            //     color: CupertinoColors.activeGreen.resolveFrom(context),
+            //   ),
+            // ),
             WhatsNewFeature(
               title: const Text(Constants.utilitiesFeatureTitle),
               description: const Text(Constants.utilitiesFeatureDesc),
@@ -57,7 +57,7 @@ class IosOnboarding extends StatelessWidget {
           ],
         ),
         const CupertinoOnboardingPage(
-          title: Text('Permissions'),
+          title: Text('Разрешения'),
           bodyPadding: EdgeInsets.zero,
           titleToBodySpacing: 10,
           body: PermissionsView(),

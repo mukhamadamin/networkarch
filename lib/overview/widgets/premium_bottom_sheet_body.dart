@@ -17,10 +17,10 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/network_status/widgets/adaptive_button.dart';
-import 'package:network_arch/overview/overview.dart';
-import 'package:network_arch/shared/shared.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/network_status/widgets/adaptive_button.dart';
+import 'package:network_scanner/overview/overview.dart';
+import 'package:network_scanner/shared/shared.dart';
 
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart'
     hide PlatformWidget;
@@ -73,7 +73,7 @@ class _PremiumBottomSheetBodyState extends State<PremiumBottomSheetBody> {
           child: Column(
             children: [
               Text(
-                'Help to maintain our servers',
+                'Помощь в обслуживании наших серверов',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge

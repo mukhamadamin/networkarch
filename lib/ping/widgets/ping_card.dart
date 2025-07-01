@@ -7,9 +7,9 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Project imports:
-import 'package:network_arch/models/animated_list_model.dart';
-import 'package:network_arch/ping/repository/repository.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/models/animated_list_model.dart';
+import 'package:network_scanner/ping/repository/repository.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class PingCard extends StatelessWidget {
   const PingCard({
@@ -37,11 +37,11 @@ class PingCard extends StatelessWidget {
         leading: hasError
             ? StatusCard(
                 color: isIos ? CupertinoColors.systemRed : Colors.red,
-                text: 'Offline',
+                text: 'Не в сети',
               )
             : StatusCard(
                 color: isIos ? CupertinoColors.systemGreen : Colors.green,
-                text: 'Online',
+                text: 'Онлайн',
               ),
         title: Text(
           addr,

@@ -7,9 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/themes.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/theme/themes.dart';
 
 class PermissionCard extends StatelessWidget {
   const PermissionCard({
@@ -97,7 +97,7 @@ class PermissionCard extends StatelessWidget {
                   child: Center(
                     child: TextButton(
                       onPressed: onPressed,
-                      child: const Text('Request'),
+                      child: const Text('Запрос'),
                     ),
                   ),
                 ),
@@ -142,7 +142,7 @@ class PermissionCard extends StatelessWidget {
                     )
                   : CupertinoButton(
                       onPressed: onPressed,
-                      child: const Text('Request'),
+                      child: const Text('Запрос'),
                     ),
           padding: Constants.cupertinoListTileWithIconPadding,
         ),

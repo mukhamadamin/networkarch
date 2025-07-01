@@ -14,10 +14,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/ip_geo/bloc/ip_geo_bloc.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/utils.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/ip_geo/bloc/ip_geo_bloc.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/utils.dart';
 
 class IpGeoView extends StatefulWidget {
   const IpGeoView({super.key});
@@ -67,14 +67,14 @@ class _IpGeoViewState extends State<IpGeoView> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('IP Geolocation'),
+        title: const Text('IP Геолокация'),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: Constants.bodyPadding.right),
             child: TextButton(
               onPressed: _shouldCheckBeActive ? _handleCheck : null,
               child: Text(
-                'Check',
+                'Проверить',
                 style: TextStyle(
                   color: _shouldCheckBeActive ? Colors.green : Colors.grey,
                   fontSize: 16,
@@ -90,12 +90,12 @@ class _IpGeoViewState extends State<IpGeoView> {
 
   Widget _buildIOS(BuildContext context) {
     return CupertinoContentScaffold(
-      largeTitle: const Text('IP Geolocation'),
+      largeTitle: const Text('IP Геолокация'),
       navBarTrailingWidget: CupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: _handleCheck,
         child: Text(
-          'Check',
+          'Проверить',
           style: TextStyle(
             color: CupertinoColors.systemGreen.resolveFrom(context),
           ),
@@ -151,31 +151,31 @@ class _IpGeoViewState extends State<IpGeoView> {
                     widgetR: Text(state.ipGeoModel.query ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Country'),
+                    widgetL: const Text('Страна'),
                     widgetR: Text(state.ipGeoModel.country ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Region'),
+                    widgetL: const Text('Регион'),
                     widgetR: Text(state.ipGeoModel.region ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('City'),
+                    widgetL: const Text('Город'),
                     widgetR: Text(state.ipGeoModel.city ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Latitude'),
+                    widgetL: const Text('Широта'),
                     widgetR: Text(state.ipGeoModel.lat.toString()),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Longitude'),
+                    widgetL: const Text('Долгота'),
                     widgetR: Text(state.ipGeoModel.lon.toString()),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Timezone'),
+                    widgetL: const Text('Таймзона'),
                     widgetR: Text(state.ipGeoModel.timezone ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Zipcode'),
+                    widgetL: const Text('Зипкод'),
                     widgetR: Text(state.ipGeoModel.zip ?? 'N/A'),
                   ),
                   ListTextLine(
@@ -183,7 +183,7 @@ class _IpGeoViewState extends State<IpGeoView> {
                     widgetR: Text(state.ipGeoModel.isp ?? 'N/A'),
                   ),
                   ListTextLine(
-                    widgetL: const Text('Organization'),
+                    widgetL: const Text('Организация'),
                     widgetR: Text(state.ipGeoModel.org ?? 'N/A'),
                   ),
                   ListTextLine(

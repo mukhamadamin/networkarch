@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/shared/list_circular_progress_indicator.dart';
-import 'package:network_arch/shared/shared_widgets.dart';
+import 'package:network_scanner/shared/list_circular_progress_indicator.dart';
+import 'package:network_scanner/shared/shared_widgets.dart';
 
 class ListTextLine extends StatelessWidget {
   const ListTextLine({

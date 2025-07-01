@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/shared/cards/cards.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/shared/cards/cards.dart';
 
 class OnboardingFeature extends StatelessWidget {
   const OnboardingFeature({

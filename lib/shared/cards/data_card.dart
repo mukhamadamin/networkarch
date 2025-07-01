@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/theme/themes.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/theme/themes.dart';
 
 class DataCard extends StatelessWidget {
   const DataCard({

@@ -7,12 +7,12 @@ import 'package:hive/hive.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // Project imports:
-import 'package:network_arch/constants.dart';
-import 'package:network_arch/introduction/introduction.dart';
-import 'package:network_arch/overview/overview.dart';
-import 'package:network_arch/permissions/permissions.dart';
-import 'package:network_arch/shared/shared.dart';
-import 'package:network_arch/utils/helpers.dart';
+import 'package:network_scanner/constants.dart';
+import 'package:network_scanner/introduction/introduction.dart';
+import 'package:network_scanner/overview/overview.dart';
+import 'package:network_scanner/permissions/permissions.dart';
+import 'package:network_scanner/shared/shared.dart';
+import 'package:network_scanner/utils/helpers.dart';
 
 class DebugSection extends StatelessWidget {
   const DebugSection({
@@ -26,25 +26,25 @@ class DebugSection extends StatelessWidget {
         return Column(
           children: [
             const SmallDescription(
-              text: 'Debug',
+              text: 'Отлаживать',
               leftPadding: 8,
             ),
             ToolCard(
-              toolName: 'Grant IAP',
+              toolName: 'Грант IAP',
               onPressed: () async {
                 await Hive.box<bool>('iap').put('isPremiumGranted', true);
               },
             ),
             const SizedBox(height: Constants.listSpacing),
             ToolCard(
-              toolName: 'Clear IAP data',
+              toolName: 'Очистить данные IAP',
               onPressed: () async {
                 await Hive.box<bool>('iap').put('isPremiumGranted', false);
               },
             ),
             const SizedBox(height: Constants.listSpacing),
             ToolCard(
-              toolName: 'Show permission granted',
+              toolName: 'Показать разрешения',
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   Constants.permissionGrantedSnackbar,
@@ -53,7 +53,7 @@ class DebugSection extends StatelessWidget {
             ),
             const SizedBox(height: Constants.listSpacing),
             ToolCard(
-              toolName: 'Show permission denied',
+              toolName: 'Показать разрешения отклонённые',
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   Constants.permissionDeniedSnackbar,
@@ -62,7 +62,7 @@ class DebugSection extends StatelessWidget {
             ),
             const SizedBox(height: Constants.listSpacing),
             ToolCard(
-              toolName: 'Show permission default',
+              toolName: 'Показать разрешения по умолчанию',
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   Constants.permissionDefaultSnackbar,
@@ -76,22 +76,22 @@ class DebugSection extends StatelessWidget {
       iosBuilder: (context) {
         return CupertinoListSection.insetGrouped(
           hasLeading: false,
-          header: const Text('Debug'),
+          header: const Text('Отлаживать'),
           children: [
             ToolCard(
-              toolName: 'Grant IAP',
+              toolName: 'Грант IAP',
               onPressed: () async {
                 await Hive.box<bool>('iap').put('isPremiumGranted', true);
               },
             ),
             ToolCard(
-              toolName: 'Clear IAP data',
+              toolName: 'Очистить данные IAP',
               onPressed: () async {
                 await Hive.box<bool>('iap').put('isPremiumGranted', false);
               },
             ),
             ToolCard(
-              toolName: 'Show permission granted',
+              toolName: 'Показать разрешения',
               onPressed: () {
                 showPlatformMessage(
                   context,
@@ -100,7 +100,7 @@ class DebugSection extends StatelessWidget {
               },
             ),
             ToolCard(
-              toolName: 'Show permission denied',
+              toolName: 'Показать разрешения отклонённые',
               onPressed: () {
                 showPlatformMessage(
                   context,
@@ -109,7 +109,7 @@ class DebugSection extends StatelessWidget {
               },
             ),
             ToolCard(
-              toolName: 'Show permission default',
+              toolName: 'Показать разрешения по умолчанию',
               onPressed: () {
                 showPlatformMessage(
                   context,
@@ -118,7 +118,7 @@ class DebugSection extends StatelessWidget {
               },
             ),
             ToolCard(
-              toolName: 'Show iOS onboarding',
+              toolName: 'Показать процесс адаптации iOS',
               onPressed: () {
                 showCupertinoModalBottomSheet<void>(
                   context: context,
