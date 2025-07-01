@@ -35,7 +35,7 @@ dependencies:
   hydrated_bloc: ^9.1.4
   in_app_review: ^2.0.8
   introduction_screen: ^3.1.12
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   json_serializable: ^6.7.1
   lan_scanner: ^4.0.0+1
   mocktail: ^1.0.3
